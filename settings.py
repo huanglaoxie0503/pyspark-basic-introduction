@@ -2,9 +2,6 @@
 # -*- coding:UTF-8 -*-
 
 
-token = '8028b88cfc69368131fbb5bd887225880511d1f636a191fc831a762c'
-
-
 cookies = {
     'UOR': 'finance.sina.com.cn,vip.stock.finance.sina.com.cn,',
     'SINAGLOBAL': '113.89.234.249_1667201515.160382',
