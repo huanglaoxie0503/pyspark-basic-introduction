@@ -75,16 +75,3 @@ if __name__ == '__main__':
     # rdd_cache(spark=sc)
 
     rdd_checkpoint(spark=sc)
-
-    """
-    NONE
-    DISK_ONLY
-    DISK_ONLY_2
-    DISK_ONLY_3
-    MEMORY_ONLY
-    MEMORY_ONLY_2
-    MEMORY_AND_DISK
-    MEMORY_AND_DISK_2
-    OFF_HEAP
-    MEMORY_AND_DISK_DESER
-    """
