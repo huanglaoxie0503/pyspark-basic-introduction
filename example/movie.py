@@ -5,10 +5,9 @@ from pyspark.sql import functions as F
 from pyspark.sql.types import StructType, StringType, IntegerType
 
 
-def movie_demo(spark, session):
+def movie_demo(session):
     """
-
-    :param spark:
+    DateFrame 基础综合使用案例
     :param session:
     :return:
     """
@@ -80,7 +79,7 @@ if __name__ == '__main__':
     spark_session = SparkSession.builder.appName("SparkSQLMovie").master('local[*]').getOrCreate()
     sc = spark_session.sparkContext
 
-    movie_demo(spark=sc, session=spark_session)
+    movie_demo(session=spark_session)
 
     """
     1. agg: 它是GroupedData对象的API, 作用是 在里面可以写多个聚合
