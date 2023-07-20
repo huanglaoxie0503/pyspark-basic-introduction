@@ -5,7 +5,7 @@ from pyspark import SparkContext, SparkConf
 
 def rdd_broadcast(spark):
     """
-
+    广播变量
     :return:
     """
     stu_info_list = [(1, '张大仙', 11),
@@ -31,13 +31,13 @@ def rdd_broadcast(spark):
     ])
 
     def map_func(data):
-        id = data[0]
+        score_id = data[0]
         name = ""
         # 匹配本地list和分布式rdd中的学生ID  匹配成功后 即可获得当前学生的姓名
         # 2. 在使用到本地集合对象的地方, 从广播变量中取出来用即可
         for stu_info in broadcast.value:
             stu_id = stu_info[0]
-            if id == stu_id:
+            if score_id == stu_id:
                 name = stu_info[1]
 
         return name, data[1], data[2]
@@ -45,29 +45,29 @@ def rdd_broadcast(spark):
     print(score_info_rdd.map(map_func).collect())
 
 
-def rdd_accumulator(spark):
+def rdd_accumulator(spark, word_counter):
     """
-
+    累加器
+    :param word_counter:
     :param spark:
     :return:
     """
-    rdd = spark.parallelize([1, 2, 3, 4, 5, 6, 7, 8, 9, 10], 2)
+    words = spark.parallelize(["spark", "hadoop", "spark", "hive", "spark"])
 
-    # Spark提供的累加器变量, 参数是初始值
-    acc = spark.accumulator(0)
+    def count_words(word):
+        global word_counter
+        if word == "spark":
+            word_counter += 1
+        return word
 
-    def map_func(data):
-        global acc
-        acc += 1
-        print(acc)
+    counts = words.map(count_words)
 
-    rdd2 = rdd.map(map_func)
-    rdd2.cache()
-    print(rdd2.collect())
+    # Action触发执行
+    output = counts.collect()
+    print(output)  # ['spark', 'hadoop', 'spark', 'hive', 'spark']
 
-    rdd3 = rdd2.map(lambda x: x)
-    print(rdd3.collect())
-    print(acc)
+    # 获取Accumulator的值
+    print("Spark count:", word_counter.value)  # Spark count: 3
 
 
 if __name__ == '__main__':
@@ -78,5 +78,8 @@ if __name__ == '__main__':
 
     sc = SparkContext(conf=conf)
 
+    # 创建一个Accumulator,初始值为0 在函数外定义全局变量word_counter
+    word_counter = sc.accumulator(0)
+
     # rdd_broadcast(spark=sc)
-    rdd_accumulator(spark=sc)
+    rdd_accumulator(spark=sc, word_counter=word_counter)

@@ -88,7 +88,7 @@ def sou_gou_demo(spark):
 if __name__ == '__main__':
     # 初始化执行环境，构建 SparkContext 对象
     conf = SparkConf()
-    conf.setAppName("RddTransformation")
+    conf.setAppName("SouGouExample")
     conf.setMaster("local[*]")
 
     sc = SparkContext(conf=conf)
