@@ -51,8 +51,9 @@
 - 内置对多种数据格式的访问和保存支持
 
     ```python
-    df.write.json("output") # 写入JSON文件
-    df = spark.read.parquet("table.parquet") # 读Parquet文件
+  # # 写入JSON文件
+  df.write.mode('overwrite').format('json').save('file_name')
+  df = spark.read.parquet("table.parquet") # 读Parquet文件
     ```
 
 ## 5. 与pandas集成
