@@ -35,7 +35,6 @@ def spider(symbol, day, conn):
             headers=headers,
         ).json()
         items = []
-        v = 0
         for row in rows:
             symbol = row.get('symbol')
             name = row.get('name')
@@ -43,12 +42,10 @@ def spider(symbol, day, conn):
             tick_time = '{0} {1}'.format(day, row.get('ticktime'))
             price = row.get('price')
             volume = row.get('volume')
-            v = v + int(volume)
             prev_price = row.get('prev_price')
             params = (symbol, name, trade_date, tick_time, price, volume, prev_price)
             items.append(row)
-            # conn.do_insert(params=params)
-        print(v)
+            conn.do_insert(params=params)
         return items
     except Exception as exp:
         print(exp)
@@ -68,8 +65,8 @@ def run():
     )
     for stock in stock_list:
         symbol = stock[0]
-        items = spider(symbol=symbol, day='2023-07-14', conn=mysql_init)
-        kafka_producer_demo(rows=items)
+        items = spider(symbol=symbol, day='2023-07-21', conn=mysql_init)
+        # kafka_producer_demo(rows=items)
 
 
 if __name__ == '__main__':
