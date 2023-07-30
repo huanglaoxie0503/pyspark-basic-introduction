@@ -74,10 +74,10 @@ def write_json_file(file_name, data):
 
 
 def get_data_to_json(conn):
-    sql = "select symbol, name, trade_date, tick_time, price, volume, prev_price from stock_tick_time where trade_date='2023-07-24';"
+    sql = "select symbol, name, trade_date, tick_time, price, volume, prev_price from stock_tick_time where trade_date='2023-07-24' and symbol='sz000001';"
     result = conn.query(sql=sql, limit=0, to_json=True)
-    # print(result)
-    file_name = '/Users/oscar/projects/big_data/pyspark-basic-introduction/data/stock_tick_time.json'
+    print(result)
+    file_name = '/Users/oscar/projects/big_data/pyspark-basic-introduction/data/stock_tick_time_000001.json'
     write_json_file(file_name=file_name, data=result)
 
 
@@ -89,19 +89,18 @@ def run():
         passwd='Oscar&0503',
         db='crawl'
     )
-    get_data_to_json(conn=conn)
+    # get_data_to_json(conn=conn)
     # 查询股票列表，拼接查询参数：sz000504
-    # sql = "select ts_code, symbol, name from stock_tick_time;"
-    # stock_list = conn.query(sql=sql, limit=0)
-    # i = 0
-    # for stock in stock_list:
-    #     i = i + 1
-    #     info = stock[0].split('.')
-    #     symbol = '{0}{1}'.format(info[1].lower(), info[0])
-    #     print('{0}抓取完成'.format(stock[0]))
-    #     spider(symbol=symbol, day='2023-07-25', conn=conn)
-    # if i % 2 == 0:
-    #     random_pause()
+    sql = "select ts_code, symbol, name from stock_basic;"
+    stock_list = conn.query(sql=sql, limit=0)
+    i = 0
+    for stock in stock_list:
+        i = i + 1
+        info = stock[0].split('.')
+        symbol = '{0}{1}'.format(info[1].lower(), info[0])
+        print('{0}抓取完成'.format(stock[0]))
+        spider(symbol=symbol, day='2023-07-26', conn=conn)
+
     # kafka_producer_demo(rows=items)
 
 
