@@ -38,8 +38,9 @@ def spider(symbol, day, conn):
         'day': day,
     }
     try:
+        url = 'https://vip.stock.finance.sina.com.cn/quotes_service/api/json_v2.php/CN_Bill.GetBillList'
         rows = requests.get(
-            'https://vip.stock.finance.sina.com.cn/quotes_service/api/json_v2.php/CN_Bill.GetBillList',
+            url=url,
             params=params,
             cookies=cookies,
             headers=headers,
@@ -99,7 +100,7 @@ def run():
         info = stock[0].split('.')
         symbol = '{0}{1}'.format(info[1].lower(), info[0])
         print('{0}抓取完成'.format(stock[0]))
-        spider(symbol=symbol, day='2023-07-26', conn=conn)
+        spider(symbol=symbol, day='2023-08-02', conn=conn)
 
     # kafka_producer_demo(rows=items)
 

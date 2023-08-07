@@ -5,8 +5,8 @@ from kafka import KafkaConsumer
 
 def kafka_consumer_demo():
     consumer = KafkaConsumer(
-        'crawl',
-        bootstrap_servers=['localhost:9092'],
+        'paimon_canal_1',
+        bootstrap_servers=['node01:9092'],
         auto_offset_reset='latest',
         enable_auto_commit=True
     )
