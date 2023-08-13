@@ -5,7 +5,7 @@ from kafka import KafkaConsumer
 
 def kafka_consumer_demo():
     consumer = KafkaConsumer(
-        'paimon_canal_1',
+        'paimon_topic',
         bootstrap_servers=['node01:9092'],
         auto_offset_reset='latest',
         enable_auto_commit=True
